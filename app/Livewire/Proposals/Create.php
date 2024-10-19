@@ -3,7 +3,7 @@
 namespace App\Livewire\Proposals;
 
 use App\Models\Project;
-use Livewire\Attributes\Validate;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class Create extends Component
@@ -12,10 +12,10 @@ class Create extends Component
     public Project $project;
     public bool $modal = false;
 
-    #[Validate(["required", "email"])]
+    #[Rule(["required", "email"])]
     public string $email = '';
 
-    #[Validate(["required", "numeric", "gt:0"])]
+    #[Rule(["required", "numeric", "gt:0"])]
     public int $hours = 0;
 
     public bool $agree = false;
@@ -27,10 +27,11 @@ class Create extends Component
             $this->addError('agree', 'Você precisa concordar com os termos de uso');
             return;
         }
-        $this->project->proposals()->updateOrCreate([
+        $this->project->proposals()
+        ->updateOrCreate(
             ['email' => $this->email],
-            ['hours' => $this->hours],
-        ]);
+            ['hours' => $this->hours]
+        );
         $this->modal = false;
     }
     public function render()
