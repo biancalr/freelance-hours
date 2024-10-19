@@ -17,6 +17,8 @@
         </div>
         <div>
             <livewire:proposals.create :$project />
+
+            <livewire:projects.timer :$project />
         </div>
     </div>
 
